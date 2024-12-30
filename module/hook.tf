@@ -4,7 +4,7 @@ resource "null_resource" "before_build_hook" {
   }
 
   provisioner "local-exec" {
-    working_dir = "${path.cwd}/${var.docker_context}"
+    working_dir = "${path.cwd}/${var.path_to_dockerfile_dir}"
     command = var.before_build_hook_command
   }
 }

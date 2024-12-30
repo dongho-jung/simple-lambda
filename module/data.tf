@@ -9,7 +9,16 @@ data "aws_security_groups" "this" {
   }
 }
 
+data "aws_vpc" "default" {
+  default = true
+}
+
+data "aws_vpc" "this" {
+  id = var.vpc_name
+}
+
 data "aws_subnet" "this" {
+  vpc_id = var.vpc_name
   for_each = toset(var.vpc_subnet_names)
 
   filter {

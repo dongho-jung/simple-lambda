@@ -13,7 +13,7 @@ resource "aws_cloudwatch_event_target" "crons" {
 }
 
 resource "aws_cloudwatch_event_rule" "alarms" {
-  count = length(var.event_source_alarm_names) > 0 ? 1 : 0
+  count = length(var.event_source_cloudwatch_alarm_names) > 0 ? 1 : 0
 
   name = "${var.name}-alarm"
   event_pattern = jsonencode({
@@ -24,14 +24,14 @@ resource "aws_cloudwatch_event_rule" "alarms" {
       "CloudWatch Alarm State Change"
     ],
     "resources" : [
-      for i, v in var.event_source_alarm_names:
-      "arn:aws:cloudwatch:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:alarm:${var.event_source_alarm_names[i]}"
+      for i, v in var.event_source_cloudwatch_alarm_names:
+      "arn:aws:cloudwatch:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:alarm:${var.event_source_cloudwatch_alarm_names[i]}"
     ]
   })
 }
 
 resource "aws_cloudwatch_event_target" "alarms" {
-  count = length(var.event_source_alarm_names) > 0 ? 1 : 0
+  count = length(var.event_source_cloudwatch_alarm_names) > 0 ? 1 : 0
 
   rule = one(aws_cloudwatch_event_rule.alarms[*].name)
   arn  = module.lambda.lambda_function_arn

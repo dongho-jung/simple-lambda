@@ -1,8 +1,5 @@
 locals {
-  image_uri_default = coalesce(
-    var.image_uri,
-    "${aws_ecr_repository.this.repository_url}:${local.dir_sha}"
-  )
+  image_uri_default = "${aws_ecr_repository.this.repository_url}:${local.dir_sha}"
   events_cron = {
     for i, _ in aws_cloudwatch_event_rule.crons : "cron_${i}" => {
       principal  = "events.amazonaws.com"
@@ -22,7 +19,7 @@ locals {
   runtime = replace(
     regex(
       "(?m:^FROM.*/(.+)$)",
-      file("${path.cwd}/${var.docker_context}/Dockerfile")
+      file("${path.cwd}/${var.path_to_dockerfile_dir}/Dockerfile")
     )[
     0
     ], ":", ""
@@ -44,10 +41,10 @@ module "lambda" {
   create_package = false
   image_uri      = local.image_uri_default
   package_type   = "Image"
-  architectures = [local.platform_architecture_map[var.docker_platform]]
+  architectures = [local.platform_architecture_map[var.target_arch]]
 
-  create_role = false
-  lambda_role = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.role_name}"
+  create_role = var.iam_role_name == null ? true : false
+  lambda_role = var.iam_role_name == null ? null : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.iam_role_name}"
 
   allowed_triggers                          = local.allowed_triggers
   create_unqualified_alias_allowed_triggers = true
