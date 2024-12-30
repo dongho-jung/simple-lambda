@@ -69,13 +69,15 @@ variable "iam_role_name" {
   description = "IAM Role name of lambda function, if exists"
 }
 
-variable "iam_role_policy_arns" {
+variable "iam_policy_arns" {
   type        = list(string)
-  default     = []
+  default     = [
+    "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+  ]
   description = "IAM policy arns of lambda function"
 }
 
-variable "iam_role_policy_statements" {
+variable "iam_statements" {
   type        = any
   default     = {}
   description = "IAM policy statements of lambda function"
