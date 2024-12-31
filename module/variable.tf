@@ -15,20 +15,6 @@ variable "description" {
 ########################
 # Optional Variables - Common
 ########################
-variable "using" {
-  type        = list(string)
-  default     = []
-  description = "Predefined settings for convenience."
-
-  validation {
-    condition     = setunion(var.using, toset(["uv"])) == toset(["uv"])
-    error_message = <<-EOT
-      Invalid value for using: ${join(", ", var.using)}.
-      Valid values are: uv
-    EOT
-  }
-}
-
 variable "environment_variables" {
   type        = map(string)
   default     = {}
@@ -57,6 +43,16 @@ variable "maximum_retry_attempts" {
   type        = number
   default     = null
   description = "Maximum retry attempts of lambda function"
+}
+
+
+########################
+# Optional Variables - Using
+########################
+variable "using_uv" {
+  type        = bool
+  default     = false
+  description = "Predefined settings for python uv"
 }
 
 

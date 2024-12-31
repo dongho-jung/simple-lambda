@@ -4,5 +4,5 @@ module "simple_lambda" {
   name = "simple-lambda-using-uv"
   description = "Simple lambda function for using uv"
 
-  using = ["uv"]
+  using_uv = true
 }

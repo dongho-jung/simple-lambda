@@ -1,10 +1,14 @@
 locals {
-  before_build_hook_trigger = length(var.using) == 0 ? null : (
-    contains(var.using, "uv") ? filesha256("${path.cwd}/${var.path_to_dockerfile_dir}/uv.lock") : null
+  before_build_hook_trigger = (
+    var.using_uv
+    ? filesha256("${path.cwd}/${var.path_to_dockerfile_dir}/uv.lock")
+    : null
   )
 
-  before_build_hook_command = length(var.using) == 0 ? null : (
-    contains(var.using, "uv") ? "uv export > requirements.txt" : null
+  before_build_hook_command = (
+    var.using_uv
+    ? "uv export > requirements.txt"
+    : null
   )
 }
 
