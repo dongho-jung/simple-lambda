@@ -86,7 +86,25 @@ variable "iam_statements" {
 variable "event_source_crons" {
   type        = list(string)
   default     = []
-  description = "Event source crons of lambda function"
+  description = <<-EOF
+    Event source crons of lambda function
+
+    Format: cron(Minutes Hours Day-of-month Month Day-of-week Year)
+      - Minutes: 0-59
+      - Hours: 0-23
+      - Day-of-month: 1-31
+      - Month: 1-12 or JAN-DEC
+      - Day-of-week: 1-7 or SUN-SAT
+      - Year: 1970-2199 (optional)
+
+    Use ? for Day-of-month or Day-of-week when you need to specify one but not the other  
+    Use * to match any value  
+    Use - for ranges (MON-FRI)  
+    Use , for lists (MON,WED,FRI)  
+    Use / for increments (*/15 for "every 15 units")  
+
+    https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html
+  EOF
 }
 
 variable "event_source_cloudwatch_alarm_names" {
