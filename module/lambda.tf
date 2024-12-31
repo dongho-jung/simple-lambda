@@ -1,5 +1,5 @@
 locals {
-  image_uri_default = "${aws_ecr_repository.this.repository_url}:${local.dir_sha}"
+  image_uri_default = "${aws_ecr_repository.this.repository_url}:${local.current_time}"
   events_cron = {
     for i, _ in aws_cloudwatch_event_rule.crons : "cron_${i}" => {
       principal  = "events.amazonaws.com"

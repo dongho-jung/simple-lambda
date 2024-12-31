@@ -130,19 +130,3 @@ variable "path_to_dockerfile_dir" {
   default     = "./src"
   description = "Path to directory containing the Dockerfile"
 }
-
-variable "before_build_hook_trigger" {
-  type    = any
-  default = null
-}
-
-variable "before_build_hook_command" {
-  type    = string
-  default = null
-}
-
-variable "excluded_files_for_build" {
-  type        = list(string)
-  default     = ["**/__pycache__/**"]
-  description = "Paths to exclude when docker build"
-}
