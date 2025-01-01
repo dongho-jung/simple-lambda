@@ -74,8 +74,8 @@ variable "iam_policy_arns" {
 }
 
 variable "iam_statements" {
-  type        = any
-  default     = {}
+  type        = list(any)
+  default     = []
   description = "IAM policy statements of lambda function"
 }
 
