@@ -25,13 +25,6 @@ resource "aws_iam_role_policy" "this" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "this" {
-  count = length(var.iam_statements) > 0 ? 1 : 0
-
-  role       = aws_iam_role.this.name
-  policy_arn = one(aws_iam_role_policy.this[*].arn)
-}
-
 resource "aws_iam_role_policy_attachment" "additional" {
   for_each = toset(var.iam_policy_arns)
 
