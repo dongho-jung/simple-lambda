@@ -29,7 +29,7 @@ resource "aws_iam_role_policy_attachment" "this" {
   count = length(var.iam_statements) > 0 ? 1 : 0
 
   role       = aws_iam_role.this.name
-  policy_arn = aws_iam_role_policy.this[0].id
+  policy_arn = one(aws_iam_role_policy.this[*].id)
 }
 
 resource "aws_iam_role_policy_attachment" "additional" {
