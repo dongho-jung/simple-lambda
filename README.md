@@ -28,15 +28,10 @@ TBD
 ## 1. Minimum Configuration
 ```terraform
 module "simple_lambda" {
-    source = "git::https://github.com/dongho-jung/simple-lambda"
-    
-    name = "my-lambda"
-    description = "my lambda"
-    runtime = "python3.12"
-    
-    role_name = "my-lambda-role"
-    docker_context = "src"
-    
-    schedule_cron = "0 0 * * ? *"  # KST 09:00 daily
+   source  = "dongho-jung/simple-lambda/aws"
+   version = "~> 1.0.0"
+   
+   name = "simple-lambda"
+   description = "simple lambda"
 }
 ```
