@@ -45,7 +45,7 @@ resource "aws_lambda_function" "this" {
   memory_size = var.memory_size
   timeout = var.timeout
 
-  role = var.iam_role_name == null ? aws_iam_role.this.arn : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.iam_role_name}"
+  role = var.iam_role_name == null ? one(aws_iam_role.this[*].arn) : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.iam_role_name}"
 
   vpc_config {
     subnet_ids = [for s in data.aws_subnet.this : s.id]
