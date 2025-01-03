@@ -20,8 +20,8 @@ locals {
     regex(
       "(?m:^FROM.*/(.+)$)",
       file("${path.cwd}/${var.path_to_dockerfile_dir}/Dockerfile")
-    )[
-    0
+      )[
+      0
     ], ":", ""
   )
   platform_architecture_map = {
@@ -43,12 +43,12 @@ resource "aws_lambda_function" "this" {
   }
 
   memory_size = var.memory_size
-  timeout = var.timeout
+  timeout     = var.timeout
 
   role = var.iam_role_name == null ? one(aws_iam_role.this[*].arn) : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.iam_role_name}"
 
   vpc_config {
-    subnet_ids = [for s in data.aws_subnet.this : s.id]
+    subnet_ids         = [for s in data.aws_subnet.this : s.id]
     security_group_ids = data.aws_security_groups.this.ids
   }
 
@@ -61,6 +61,12 @@ resource "aws_lambda_function" "this" {
 resource "aws_lambda_function_url" "this" {
   count = var.create_lambda_function_url ? 1 : 0
 
-  function_name = aws_lambda_function.this.function_name
+  function_name      = aws_lambda_function.this.function_name
   authorization_type = "NONE"
+}
+
+resource "aws_lambda_function_event_invoke_config" "this" {
+  function_name                = aws_lambda_function.this.function_name
+  maximum_event_age_in_seconds = 60
+  maximum_retry_attempts       = var.maximum_retry_attempts
 }
