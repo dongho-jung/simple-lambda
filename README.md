@@ -1,14 +1,11 @@
 # WHAT?
-A terraform module for simple Lambda deployment
+A terraform module for Simple Lambda deployment
 
 # WHEN?
 - When you want to use a runtime not supported by the Serverless Framework (e.g. Python 3.11↑)
 - When you don't have time to troubleshoot Serverless Framework issues and documentation
-- When you need to deploy a simple Lambda without the CloudFormation headache
+- When you need to deploy a Simple Lambda without the CloudFormation headache
 - When you're tired of setting up ECR, CloudWatch, Docker Image, and other resources manually with Terraform
-
-# HOW?
-TBD
 
 # WHY?
 1. **No additional installations or updates required**
@@ -33,5 +30,70 @@ module "simple_lambda" {
    
    name = "simple-lambda"
    description = "simple lambda"
+}
+```
+
+### 2. Scheduling With Cron
+```terraform
+module "simple_lambda" {
+   source  = "dongho-jung/simple-lambda/aws"
+   version = "~> 1.0.0"
+   
+   name = "simple-lambda-cron"
+   description = "simple lambda with scheduling with cron"
+   
+   event_source_crons = ["35 0 ? * * *"]  # KST 09:35 Daily
+}
+```
+
+### 3. Mapping With Cloudwatch Alarm
+```terraform
+module "simple_lambda" {
+   source  = "dongho-jung/simple-lambda/aws"
+   version = "~> 1.0.0"
+   
+   name = "simple-lambda-cloudwatch-alarm"
+   description = "simple lambda mapping with cloudwatch alarm"
+   
+   event_source_cloudwatch_alarm_names = [
+      "ecs/main/worker-cpu-utilization-high",
+   ]
+}
+```
+
+### 4. Extra Permissions
+```terraform
+module "simple_lambda" {
+   source  = "dongho-jung/simple-lambda/aws"
+   version = "~> 1.0.0"
+   
+   name = "simple-lambda-extra-permissions"
+   description = "simple lambda with extra permissions"
+   
+   iam_role_name = "monitoring-elasticsearch"
+   iam_policy_arns = ["arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess"]
+   iam_statements = [
+      {
+         actions = [
+            "s3:Get*",
+            "s3:Describe*",
+            "s3:List*"
+         ]
+         resources = ["*"]
+      }
+   ]
+}
+```
+
+### 5. Using Python uv
+```terraform
+module "simple_lambda" {
+   source  = "dongho-jung/simple-lambda/aws"
+   version = "~> 1.0.0"
+   
+   name = "simple-lambda-python-uv"
+   description = "simple lambda using python uv"
+   
+   using_uv = true
 }
 ```
