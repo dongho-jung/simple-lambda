@@ -1,4 +1,6 @@
 resource "aws_iam_role" "this" {
+  count = (length(var.iam_statements) > 0) || (length(var.iam_policy_arns) > 0) ? 1 : 0
+
   name = var.name
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -18,7 +20,7 @@ resource "aws_iam_role_policy" "this" {
   count = length(var.iam_statements) > 0 ? 1 : 0
 
   name = var.name
-  role = aws_iam_role.this.id
+  role = one(aws_iam_role.this[*].id)
   policy = jsonencode({
     Version   = "2012-10-17"
     Statement = var.iam_statements
@@ -28,6 +30,6 @@ resource "aws_iam_role_policy" "this" {
 resource "aws_iam_role_policy_attachment" "additional" {
   for_each = toset(var.iam_policy_arns)
 
-  role       = aws_iam_role.this.name
+  role       = one(aws_iam_role.this[*].name)
   policy_arn = each.value
 }
