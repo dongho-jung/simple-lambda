@@ -120,7 +120,7 @@ variable "event_source_cloudwatch_alarm_names" {
 variable "vpc_name" {
   type        = string
   default     = null
-  description = "value"
+  description = "VPC name of lambda function, if needed. If not provided, default VPC will be used"
 }
 
 variable "vpc_subnet_names" {
@@ -132,11 +132,13 @@ variable "vpc_subnet_names" {
 variable "vpc_security_group_names" {
   type    = list(string)
   default = []
+  description = "VPC Security Group names of lambda function, if needed"
 }
 
 variable "create_lambda_function_url" {
   type    = bool
   default = false
+  description = "Create lambda function url"
 }
 
 
@@ -152,11 +154,13 @@ variable "path_to_dockerfile_dir" {
 variable "before_build_hook_trigger" {
   type    = any
   default = null
+  description = "Trigger to run before docker build"
 }
 
 variable "before_build_hook_command" {
   type    = string
   default = null
+  description = "Command to run before docker build"
 }
 
 variable "excluded_files_for_build" {
