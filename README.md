@@ -22,7 +22,7 @@ A terraform module for Simple Lambda deployment
 9. **Comprehensive Resource Definitions:** Defines ECR Repository, CloudWatch Event, CloudWatch Logs LogGroup, Docker Image, and other resources when deploying Lambda
 
 # EXAMPLES
-## 1. [Minimum Configuration](./examples/minimum)
+## 1. [Minimum Configuration](https://github.com/dongho-jung/terraform-aws-simple-lambda/blob/main/examples/minimum/main.tf)
 ```terraform
 module "simple_lambda" {
    source  = "dongho-jung/simple-lambda/aws"
@@ -33,7 +33,7 @@ module "simple_lambda" {
 }
 ```
 
-## 2. [Scheduling With Cron](./examples/cron)
+## 2. [Scheduling With Cron](https://github.com/dongho-jung/terraform-aws-simple-lambda/blob/main/examples/cron/main.tf)
 ```terraform
 module "simple_lambda" {
    source  = "dongho-jung/simple-lambda/aws"
@@ -46,7 +46,7 @@ module "simple_lambda" {
 }
 ```
 
-## 3. [Mapping With Cloudwatch Alarm](./examples/cloudwatch-alarm)
+## 3. [Mapping With Cloudwatch Alarm](https://github.com/dongho-jung/terraform-aws-simple-lambda/blob/main/examples/cloudwatch-alarm/main.tf)
 ```terraform
 module "simple_lambda" {
    source  = "dongho-jung/simple-lambda/aws"
@@ -61,7 +61,7 @@ module "simple_lambda" {
 }
 ```
 
-## 4. [Extra Permissions](./examples/extra-permissions)
+## 4. [Extra Permissions](https://github.com/dongho-jung/terraform-aws-simple-lambda/blob/main/examples/extra-permissions/main.tf)
 ```terraform
 module "simple_lambda" {
    source  = "dongho-jung/simple-lambda/aws"
@@ -85,7 +85,7 @@ module "simple_lambda" {
 }
 ```
 
-## 5. [Using Python uv](./examples/python-uv)
+## 5. [Using Python uv](https://github.com/dongho-jung/terraform-aws-simple-lambda/blob/main/examples/python-uv/main.tf)
 ```terraform
 module "simple_lambda" {
    source  = "dongho-jung/simple-lambda/aws"
